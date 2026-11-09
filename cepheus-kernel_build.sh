@@ -49,8 +49,10 @@ if [ -f arch/arm64/configs/sm8150_base.config ] && [ -f arch/arm64/configs/cephe
 else
   kmake cepheus_defconfig
 fi
-# CI patch: enable netfilter options required by Docker / 1Panel
+# CI patch: enable options required by Docker / 1Panel
 scripts/config --enable NFT_COMPAT --enable NF_TABLES_NETDEV --enable NETFILTER_XTABLES_LEGACY
+scripts/config --enable CGROUP_BPF
+scripts/config --module NFT_FIB_IPV4 --module NFT_FIB_IPV6 --module NFT_FIB_INET
 kmake olddefconfig
 kmake deb-pkg
 cd ..
